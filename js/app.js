@@ -167,21 +167,114 @@ Player.prototype.handleInput = function(allowedKeys) {
     }
 };
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+
+/*
+*******************
+*******HEART******
+*******************
+Heart is aimed to give player additional life
+*/
+// base heart function
+var Heart = function(x,y) {
+    "use strict";
+    this.x = x;
+    this.y = y;
+    this.sprite = 'images/Heart.png';
+    this.heartWaitTime = undefined;
+};
+
+// Update heart, call checkCollision
+Heart.prototype.update = function() {
+    "use strict";
+    this.checkCollision();
+};
+
+// Render heart
+Heart.prototype.render = function() {
+    "use strict";
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+// Check for collision
+Heart.prototype.checkCollision = function() {
+    "use strict";
+    //  hitboxes for collision detection based on previous with player/enemy
+    var playerBox = {x: player.x, y: player.y, width: 50, height: 40};
+    var heartBox = {x: this.x, y: this.y, width: 60, height: 70};
+    // Check for collisions, if playerBox intersects heartBox, coll = true
+    if (playerBox.x < heartBox.x + heartBox.width &&
+        playerBox.x + playerBox.width > heartBox.x &&
+        playerBox.y < heartBox.y + heartBox.height &&
+        playerBox.height + playerBox.y > heartBox.y) {
+        // Collision detected, call collisionDetected function
+        this.collisionDetected();
+    }
+};
+
+// Heart collision detected, pop heart off screen
+// add player life, wait 45 seconds, then place heart back in map
+Heart.prototype.collisionDetected = function() {
+    "use strict";
+    this.x = 900;
+    this.y = 900;
+    player.playerLives += 1;
+    this.wait();
+};
+
+//timer for heart reset
+Heart.prototype.wait = function() {
+    this.heartWaitTime = setTimeout( function() {
+        heart.heartReset();
+    }, 45000);
+};
+
+// randomize heart location
+Heart.prototype.heartReset = function() {
+    "use strict";
+    //Hearts appear at: 0, 101, 202, 303, 404
+    this.x = (101 * Math.floor(Math.random() * 4) + 0);
+    //Hearts appear at: 70, 155, 240
+    this.y = (70 + (85 * Math.floor(Math.random() * 3) + 0));
+};
 
 
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+
+/*
+*************
+Instantiation
+*************
+*/
+// Instantiate player
+var player = new Player();
+
+// Empty allEnemies array
+var allEnemies = [];
+
+// Instantiate all enemies, set to 3, push to allEnemies array
+for (var i = 0; i < 3; i++) {
+
+    var startSpeed = speedMultiplier * Math.floor(Math.random() * 10 + 1);
+    //hide enemies until movement begins
+    allEnemies.push(new Enemy(-100, 60 + (85 * i), startSpeed));
+}
+
+// Instantiate heart
+var heart = new Heart (101 * Math.floor(Math.random() * 4) + 0, 70 +
+    (85 * Math.floor(Math.random() * 3) + 0));
+
+/* Re-written as a named function so we can use removeEventListener
+ * during "startGame" and "gameOver."
+ * credit http://stackoverflow.com/questions/4950115/removeeventlistener-on-anonymous-functions-in-javascript
+ */
+var input = function(e) {
+    "use strict";
     var allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
-});
+};
+document.addEventListener('keyup', input);
