@@ -15,17 +15,25 @@ body {
     width: 50%;
     height: 200px;
     background: #ffffff;
-    transform: translate(50%,90%)
+    transform: translate(50%,90%);
+    border-radius: 10px;
 }
 
 .modal-title {
     padding-top: 2rem;
+    font-family: 'Chela One', cursive;
+    font-size: 40px;
 }
 
 .modal-button {
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
 .hide {
     display: none;
+}
+button:hover{
+  background: #5897fc;
+  border-radius: 2px;
+  font-weight: bold;
 }
