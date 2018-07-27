@@ -7,6 +7,7 @@ var Enemy = function(x, y, speed) {
     this.step = 101;
     this.boundary = this.step * 5;
     this.resetPosition = -this.step;
+    this.winState = false;
 };
 
 // Update the enemy's position, required method for game
@@ -72,8 +73,10 @@ class Hero{
       for(let enemy of allEnemies){
           if (this.y === enemy.y && (enemy.x + enemy.step/2 > this.x && enemy.x < this.x + this.step/2)){
             this.reset();
-          }
-          console.log(this.y, enemy.y);
+        }
+      }
+      if(this.y === 55){
+        this.winState = true;
       }
     }
     reset(){
