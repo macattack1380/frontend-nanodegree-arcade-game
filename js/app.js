@@ -29,9 +29,9 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-/*
+/***********
 ***Player***
-*/
+************/
 class Hero{
     constructor(){
       this.sprite = 'images/char-boy.png';
@@ -93,8 +93,9 @@ const player = new Hero();
 const bug1 = new Enemy(-101, 0, 200);
 const bug2 = new Enemy(-101, 83, 300);
 const bug3 = new Enemy((101*2.5), 83, 300);
+const bug4 = new Enemy((-101*2), (83*2), 100);
 const allEnemies = [];
-allEnemies.push(bug1,bug2,bug3);
+allEnemies.push(bug1,bug2,bug3,bug4);
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
