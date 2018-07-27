@@ -21,16 +21,53 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
+/*
+***Player***
+*/
+class Hero{
+    constructor(){
+      this.sprite = 'images/char-boy.png';
+      this.step = 101;
+      this.jump = 83;
+      this.startX = this.step * 2;
+      this.startY = (this.jump * 5) - 20;
+      this.x = this.startX;
+      this.y = this.startY;
+    }
+    render() {
+      ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+    handleInput(input){
+    switch(input){
+    case 'left':
+        if (this.x > 0){
+            this.x -= this.step;
+        }
+        break;
+    case 'right':
+        if (this.x < this.step * 4){
+            this.x += this.step;
+        }
+        break;
+    case 'up':
+        if (this.y > this.jump){
+            this.y -= this.jump;
+        }
+        break;
+    case 'down':
+        if (this.y < this.jump * 4){
+            this.y += this.jump;
+        }
+        break;
+      }
+    }
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-
+const player = new Hero();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
