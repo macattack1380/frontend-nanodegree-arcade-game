@@ -74,7 +74,7 @@ class Hero{
     }
     update(){
       for(let enemy of allEnemies){
-          if (this.y === enemy.y && (enemy.x + enemy.step/2 > this.x && enemy.x < this.x + this.step/2)){
+          if (this.y === enemy.y && (enemy.x + enemy.step/1.5 > this.x && enemy.x < this.x + this.step/2)){
             this.reset();
         }
       }
@@ -93,17 +93,14 @@ class Hero{
 // Place the player object in a variable called player
 
 const player = new Hero();
-//const bug1 = new Enemy(-101, 0, 200);
-//const bug2 = new Enemy(-101, 83, 300);
-//const bug3 = new Enemy((101*2.5), 83, 300);
-//const bug4 = new Enemy((-101*2), (83*2), 100);
+//create enemies - refactored at suggestion of Udacity feedback
 const allEnemies = [
   new Enemy(-101, 0, 200),
   new Enemy(-101, 83, 300),
   new Enemy((101*2.5), 83, 300),
   new Enemy((-101*2), (83*2), 100)
 ];
-//allEnemies.push(bug1,bug2,bug3,bug4);
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
